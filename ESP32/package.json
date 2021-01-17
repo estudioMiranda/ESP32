@@ -1,0 +1,26 @@
+{
+  "name": "miranda",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "authors": {
+    "name": "",
+    "email": ""
+  },
+  "repository": "/miranda",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src",
+    "deploy": "deploy.sh"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^1.18.3",
+    "read-pkg-up": "^4.0.0",
+    "shelljs": "^0.8.2",
+    "vuepress": "^0.14.1"
+  },
+  "devDependencies": {
+    "vuepress": "^1.8.0"
+  }
+}
