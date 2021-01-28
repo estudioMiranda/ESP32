@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<meta charset="UTF-8">
+
+<script>
+
+var connection = new WebSocket('ws://'+location.hostname+':81/');
+
+var button_1_status = 0;
+var temp_data = 0;
+var hum_data = 0;
+connection.onmessage = function(event){
+
+  var full_data = event.data;
+  console.log(full_data);
+  var data = JSON.parse(full_data);
+  temp_data = data.temp;
+  hum_data = data.hum;
+  document.getElementById("temp_meter").value = temp_data;
+  document.getElementById("temp_value").innerHTML = temp_data;
+  document.getElementById("hum_meter").value = hum_data;
+  document.getElementById("hum_value").innerHTML = hum_data;
+}
+
+function button_1_on()
+{
+   button_1_status = 1; 
+  console.log("Led is ON");
+  send_data();
+}
+
+function button_1_off()
+{
+  button_1_status = 0;
+console.log("Led is OFF");
+send_data();
+}
+
+function send_data()
+{
+  var full_data = '{"Led" :'+button_1_status+'}';
+  connection.send(full_data);
+}
+
+</script>
+
+<body>
+
+<center>
+<h1>ESP32 Digital output Botón y PWM input sensor Temperatura y Humedad</h1>
+
+<h3> Led </h3>
+<button onclick= "button_1_on()" >On</button><button onclick="button_1_off()" >Off</button>
+
+
+<div style="text-align: center;">
+<h3>Temperatura</h3>
+<meter value="2" min="0" max="100" id="temp_meter"> </meter>
+<h3 id="temp_value" style="display: inline-block;"> 2 </h3>
+<h3>Humedad</h3><meter value="2" min="0" max="100" id="hum_meter"> </meter>
+<h3 id="hum_value" style="display: inline-block;"> 2 </h3>
+
+</body>
+</html>

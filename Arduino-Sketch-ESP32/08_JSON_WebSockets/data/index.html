@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+
+var connection = new WebSocket('ws://'+location.hostname+':81/');
+
+var button_1_status = 0;
+
+function button_1_on()
+{
+   button_1_status = 1; 
+  console.log("Led is ON");
+  send_data();
+}
+
+function button_1_off()
+{
+  button_1_status = 0;
+console.log("Led is OFF");
+send_data();
+}
+
+function send_data()
+{
+  var full_data = '{"Led" :'+button_1_status+'}';
+  connection.send(full_data);
+}
+
+</script>
+<body>
+
+<center>
+<h1>ESP32 JSON</h1>
+
+<h3> LED </h3>
+<button onclick= "button_1_on()" >On</button><button onclick="button_1_off()" >Off</button>
+
+</center>
+</body>
+</html>
