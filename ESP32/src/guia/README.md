@@ -1,6 +1,23 @@
 # ESP32 Arduino
+ 
+Hola y bienvenidos a este tutorial,
 
-Es una placa de desarrollo IoT creada por la empresa espressif que destaca por permitirnos el creación de proyectos electrónicos a través de redes WiFi. En esta guia veremos algunos de ellos en el entorno de desarrollo Arduino. 
+En este tutorial aprenderemos a programar el microcontrolador ESP32 de espressif con el IDE de Arduino. Este microcontrolador programable es muy popular por que integra conectividad WiFi y Bluetooth a un precio muy económico que lo hace ideal para proyectos IoT “internet de las cosas”.
+
+Podemos encontrar DevKits o placas de desarrollo, que además, integran cámara y micrófono para proyectos de video vigilancia o también micrófono y salida de audio para crear nuestro propio asistente de voz. 
+
+Como vemos las posibilidades son infinitas.
+
+Hablemos ahora de su precio y donde comprarlas, rondan desde 6 €/$ (en tiendas chinas) hasta unos 10 €/$ en amazon.
+
+Yo utilizo esta que recomiendan aquí:
+
+RandomNerdTutorials [DOIT ESP32 DEVKIT V1](https://randomnerdtutorials.com/getting-started-with-esp32/)
+
+Donde comprar [DOIT ESP32 DEVKIT V1](https://makeradvisor.com/tools/esp32-dev-board-wi-fi-bluetooth/)
+
+que utilizo para el desarrollo de los tutoriales
+
 
 ## Configuración
 
@@ -19,39 +36,45 @@ Aquí os dejo dos direcciones que utilizo y funcionan, a día de hoy claro.
 
 Desde [randomnerdtutorials.com](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
 
-Desde [github.com/espressif](https://github.com/espressif/arduino-esp32/blob/master/docs/arduino-ide/boards_manager.md)
-
 Selecciona **File > Preferences** e introduce la siguiente línea:
 ```
 https://dl.espressif.com/dl/package_esp32_index.json
 ```
+ó desde [github.com/espressif](https://github.com/espressif/arduino-esp32/blob/master/docs/arduino-ide/boards_manager.md)
+
+```
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
+
 Selecciona **Tools > Board > Boards Manager…** y busca:
 ```
 ESP32 by Espressif Systems
 ```
 una vez instalado seleccionaremos la placa en **Tools > Board** en mi caso es: **DOIT ESP32 DEVKIT V1** en **Tools > Port** seleccionaremos el puerto, depende del sistema operativo lo veremos como **COM y un número** para windows y  **/dev/cu.SLAB_/USBtoUART** en Mac.
 
-Finalmente selecciona un ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
+Finalmente selecciona un ejemplo **Archivo > Ejemplos > Basics > Blink** y realiza un test.
 
-## Conexión WiFi
+Si quieres comprobar la conexión WiFi selecciona el ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
 
-### Bibliotecas
+## Bibliotecas
+
+### Instalación
 
 Existen tres formas de incorporar **bibliotecas**:
 
-1. Programa > Incluir Librerías > Administrar bibliotecas
+1. Abre un panel de búsqueda e instalación de bibliotecas en:
 
-      Abre un panel de búsqueda e instalación de la biblioteca
+  **Programa > Incluir Librerías > Administrar bibliotecas**
 
-2. Descargar de internet la biblioteca en formato zip
+2. Descarga de internet la biblioteca en formato zip
 
-      Programa > Incluir Librerías > Añadir biblioteca .ZIP
+  **Programa > Incluir Librerías > Añadir biblioteca .ZIP**
 
-3. Descomprimir el fichero ZIP, copiar y pegar en:
+3. Descomprime el fichero ZIP, copia y pega (elimina **master** del nombre de la carpeta) en:
 
-      Documentos > Arduino > libraries  
+  **Documentos > Arduino > libraries**  
 
-Algunas bibliotecas utilizadas:
+### Descarga Bibliotecas
 
 Descarga [Paquete de Bibliotecas](https://github.com/espressif/arduino-esp32)
 
@@ -63,7 +86,9 @@ Descarga [SPIFFS](https://github.com/espressif/arduino-esp32/tree/master/librari
 
 Descarga [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
 
-Descarga [arduinoWebSockets](https://github.com/Links2004/arduinoWebSockets)
+Descarga [ArduinoWebSockets](https://github.com/Links2004/arduinoWebSockets)
+
+## Conexión WiFi
 
 ### Modo Soft Access Point
 
@@ -646,7 +671,7 @@ Vue.createApp(app).mount('#app')
 </body>
 </html>
 ```
-## Crear una Library en Arduino
+## Crear una Biblioteca en Arduino
 
 Morse [Library](https://www.arduino.cc/en/Hacking/LibraryTutorial)
 
@@ -760,7 +785,7 @@ void Morse::dash()
   delay(250);
 }
 ```
-### Sketch + Library
+### Sketch + Biblioteca
 
 ```cpp
 #include <Morse.h>
