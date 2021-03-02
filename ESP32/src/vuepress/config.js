@@ -1,7 +1,7 @@
 const { description } = require('../../package')
 
 module.exports = {
-  base: '/esp32/',
+  base: '/ESP32/',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
