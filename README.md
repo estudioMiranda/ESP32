@@ -1,6 +1,23 @@
 # ESP32 Arduino
+ 
+Hola y bienvenidos a este tutorial,
 
-Es una placa de desarrollo IoT creada por la empresa espressif que destaca por permitirnos el creación de proyectos electrónicos a través de redes WiFi. En esta guia veremos algunos de ellos en el entorno de desarrollo Arduino. 
+En este tutorial aprenderemos a programar el microcontrolador ESP32 de espressif con el IDE de Arduino. Este microcontrolador programable es muy popular por que integra conectividad WiFi y Bluetooth a un precio muy económico que lo hace ideal para proyectos IoT “internet de las cosas”.
+
+Podemos encontrar DevKits o placas de desarrollo, que además, integran cámara y micrófono para proyectos de video vigilancia o también micrófono y salida de audio para crear nuestro propio asistente de voz. 
+
+Como vemos las posibilidades son infinitas.
+
+Hablemos ahora de su precio y donde comprarlas, rondan desde 6 €/$ (en tiendas chinas) hasta unos 10 €/$ en amazon.
+
+Yo utilizo esta que recomiendan aquí:
+
+RandomNerdTutorials [DOIT ESP32 DEVKIT V1](https://randomnerdtutorials.com/getting-started-with-esp32/)
+
+Donde comprar [DOIT ESP32 DEVKIT V1](https://makeradvisor.com/tools/esp32-dev-board-wi-fi-bluetooth/)
+
+que utilizo para el desarrollo de los tutoriales
+
 
 ## Configuración
 
@@ -15,29 +32,71 @@ Descarga el [Driver CP210x](https://www.silabs.com/developers/usb-to-uart-bridge
 
 ### Configurar la placa en Arduino
 
+Aquí os dejo dos direcciones que utilizo y funcionan, a día de hoy claro.
+
+Desde [randomnerdtutorials.com](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/)
+
 Selecciona **File > Preferences** e introduce la siguiente línea:
 ```
 https://dl.espressif.com/dl/package_esp32_index.json
 ```
+ó desde [github.com/espressif](https://github.com/espressif/arduino-esp32/blob/master/docs/arduino-ide/boards_manager.md)
+
+```
+https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+```
+
 Selecciona **Tools > Board > Boards Manager…** y busca:
 ```
 ESP32 by Espressif Systems
 ```
 una vez instalado seleccionaremos la placa en **Tools > Board** en mi caso es: **DOIT ESP32 DEVKIT V1** en **Tools > Port** seleccionaremos el puerto, depende del sistema operativo lo veremos como **COM y un número** para windows y  **/dev/cu.SLAB_/USBtoUART** en Mac.
 
-Finalmente selecciona un ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
+Finalmente selecciona un ejemplo **Archivo > Ejemplos > Basics > Blink** y realiza un test.
+
+Si quieres comprobar la conexión WiFi selecciona el ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
+
+## Bibliotecas
+
+### Instalación
+
+Existen tres formas de incorporar **bibliotecas**:
+
+1. Abre un panel de búsqueda e instalación de bibliotecas en:
+
+  **Programa > Incluir Librerías > Administrar bibliotecas**
+
+2. Descarga de internet la biblioteca en formato zip
+
+  **Programa > Incluir Librerías > Añadir biblioteca .ZIP**
+
+3. Descomprime el fichero ZIP, copia y pega (elimina **master** del nombre de la carpeta) en:
+
+  **Documentos > Arduino > libraries**  
+
+### Descarga Bibliotecas
+
+Descarga [Paquete de Bibliotecas](https://github.com/espressif/arduino-esp32)
+
+Descarga [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
+
+Descarga [AsyncTCP](https://github.com/me-no-dev/AsyncTCP)
+
+Descarga [SPIFFS](https://github.com/espressif/arduino-esp32/tree/master/libraries/SPIFFS)
+
+Descarga [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
+
+Descarga [ArduinoWebSockets](https://github.com/Links2004/arduinoWebSockets)
 
 ## Conexión WiFi
 
-### Blibiotecas
+### Modo Soft Access Point
+
+Un punto de acceso inalámbrico (AP) proporciona acceso a través de su red WiFi a otros dispositivos (estaciones). La placa de desarrollo crea su propia red WiFi y permite la comunicación directa a un dispositivo (movil, computadora o una tablet)
 
 Biblioteca [#include <WiFi.h>](https://www.arduino.cc/en/Reference/WiFiServer)
 
 Biblioteca [#include <ESP8266WiFi.h>](https://esp8266-arduino-spanish.readthedocs.io/es/latest/esp8266wifi/readme.html)
-
-### Modo Soft Access Point
-
-Un punto de acceso inalámbrico (AP) es un dispositivo que proporciona acceso a la red WiFi a otros dispositivos (estaciones) y los conecta a una red cableada. 
 
 ``` cpp
 #ifdef ESP8266
@@ -65,7 +124,7 @@ void loop(void)
 
 ### Modo Station
 
-El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi establecida por un punto de acceso.  
+El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi mediante un router o punto de acceso que conecta con otros dispositivos que estan en la red local o bien a través de internet.  
 
 ```cpp
 #ifdef ESP8266
@@ -467,4 +526,297 @@ connection.send("Led esta en OFF");
 </center>
 </body>
 </html>
+```
+### WebSockets Vue.js SPIFFS
+
+JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
+
+#### Arduino Sketch
+
+```cpp
+Arduino Sketch
+```
+HTML Vue.js
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32</title> 
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app">
+    <center>
+      <h1>ESP32 PWM Motor</h1>
+        <h3> Motor </h3>
+          <div>
+            <button @click= "Avanzar" >Avanzar</button>
+          </div>
+          <div>
+            <button @click= "Izquierda" >Izquierda</button>
+            <button @click= "Derecha" >Derecha</button>
+          </div>
+          <div>
+            <button @click= "Retroceder" >Retroceder</button>
+          </div>
+          <div>
+            <input type="range" min="0" max="255" v-model="velocidad" value="125" class="slider">
+            <p>Valor: <span>{{ velocidad }}</span></p>
+          </div>
+          <div>
+            <button @click= "Velocidad" >Velocidad</button>
+          </div>
+        
+        <h3> Led </h3>
+          <button @click= "buttonOn" >On</button>
+          <button @click= "buttonOff" >Off</button>
+                
+        <h3>Temperatura</h3>
+          <meter :value="temperatura" min="0" max="100"> </meter>
+          <h3 style="display: inline-block;"> {{ temperatura }} </h3>
+
+        <h3>Humedad</h3>
+          <meter :value="humedad" min="0" max="100"> </meter>
+          <h3 style="display: inline-block;"> {{ humedad }} </h3>
+
+    </center>      
+  </div>
+    <script>
+        const app = {
+    data() {
+      return {
+        temperatura: 0,
+        humedad: 0,
+        buttonStatus: 0,
+        buttonMover: 0,
+        velocidad: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+
+    methods: {
+
+      onMessage(event){
+        var datosTH = event.data;
+        console.log(datosTH);
+        // Convertimos el JSON en datos
+        var data = JSON.parse(datosTH);
+        this.temperatura = data.temp;
+        this.humedad = data.hum;
+      },
+      Velocidad(){
+        this.buttonMover = this.velocidad; 
+        console.log("Motor velocidad")
+        this.send_data_motor()
+      },
+      Parar(){
+        this.buttonMover = 0; 
+        console.log("Motor parar")
+        this.send_data_motor()
+      },
+      Avanzar(){
+        this.buttonMover = 1; 
+        console.log("Motor avanza")
+        this.send_data_motor()
+      },
+      Izquierda(){
+        this.buttonMover = 2; 
+        console.log("Motor gira izquierda")
+        this.send_data_motor()
+      },
+      Derecha(){
+        this.buttonMover = 3; 
+        console.log("Motor gira derecha")
+        this.send_data_motor()
+      },
+      Retroceder(){
+        this.buttonMover = 4; 
+        console.log("Motor retrocede")
+        this.send_data_motor()
+      },
+      send_data_motor(){
+        var full_data = '{"Velocidad" :'+this.buttonMover+'}'
+        this.connection.send(full_data)
+      },
+      
+      buttonOn(){
+        this.buttonStatus = 1; 
+        console.log("Led is ON")
+        this.send_data_led()
+      },
+
+      buttonOff(){
+        this.buttonStatus = 0;
+        console.log("Led is OFF")
+        this.send_data_led()
+      },
+      
+      send_data_led(){
+        var full_data = '{"Led" :'+this.buttonStatus+'}'
+        this.connection.send(full_data)
+      },
+    },
+    
+    mounted() {
+      this.connection.onmessage = event => {
+        this.onMessage(event)
+      }
+  }
+}
+
+Vue.createApp(app).mount('#app')
+    </script>  
+</body>
+</html>
+```
+## Crear una Biblioteca en Arduino
+
+Morse [Library](https://www.arduino.cc/en/Hacking/LibraryTutorial)
+
+Necesitamos al menos de dos archivos para una biblioteca: 
+- Morse.h
+- Morse.cpp
+
+
+### Encabezado (Morse.h)
+
+El archivo de encabezado tiene definiciones para la biblioteca: básicamente una lista de todo lo que hay dentro.
+
+```cpp
+#ifndef Morse_h
+#define Morse_h
+
+#include "Arduino.h"
+
+class Morse
+{
+  public:
+    Morse(int pin);
+    void dot();
+    void dash();
+  private:
+    int _pin;
+};
+
+#endif
+```
+
+Es común envolver todo el archivo de encabezado en una construcción de aspecto extraño
+```cpp
+#ifndef Morse_h
+#define Morse_h
+
+#endif
+```
+Básicamente, esto evita problemas si alguien # incluye accidentalmente su biblioteca dos veces.
+
+```cpp
+#include "Arduino.h"
+```
+
+Una es una declaración **#include** que le da acceso a los tipos y constantes estándar del lenguaje Arduino.
+
+Una clase es simplemente una colección de funciones y variables que se mantienen juntas en un solo lugar. Pueden ser públicas , lo que significa que son accesibles desde cualquier parte a ellas, o privadas , lo que significa que solo se puede acceder a ellas desde la propia clase. Cada clase tiene una función especial conocida como constructor , que se utiliza para crear una instancia de la clase. El constructor tiene el mismo nombre que la clase y no tiene tipo de retorno.
+
+### Origen (*.cpp)
+
+El archivo fuente tiene el código real:
+
+```cpp
+#include "Arduino.h"
+#include "Morse.h"
+
+Morse::Morse(int pin)
+{
+  pinMode(pin, OUTPUT);
+  _pin = pin;
+}
+
+void Morse::dot()
+{
+  digitalWrite(_pin, HIGH);
+  delay(250);
+  digitalWrite(_pin, LOW);
+  delay(250);  
+}
+
+void Morse::dash()
+{
+  digitalWrite(_pin, HIGH);
+  delay(1000);
+  digitalWrite(_pin, LOW);
+  delay(250);
+}
+```
+Primero vienen un par de declaraciones #include. Estos le dan al resto del código acceso a las funciones estándar de Arduino y a las definiciones en su archivo de encabezado:
+
+```cpp
+#include "Arduino.h"
+#include "Morse.h"
+```
+Luego viene el constructor. Nuevamente, esto explica lo que debería suceder cuando alguien crea una instancia de su clase. En este caso, el usuario especifica qué pin le gustaría usar. Configuramos el pin como una salida y lo guardamos en una variable privada para usar en las otras funciones:
+
+```cpp
+Morse::Morse(int pin)
+{
+  pinMode(pin, OUTPUT);
+  _pin = pin;
+}
+```
+
+Luego viene el código real del boceto que está convirtiendo en una biblioteca
+
+```cpp
+void Morse::dot()
+{
+  digitalWrite(_pin, HIGH);
+  delay(250);
+  digitalWrite(_pin, LOW);
+  delay(250);  
+}
+
+void Morse::dash()
+{
+  digitalWrite(_pin, HIGH);
+  delay(1000);
+  digitalWrite(_pin, LOW);
+  delay(250);
+}
+```
+### Sketch + Biblioteca
+
+```cpp
+#include <Morse.h>
+
+Morse morse(13);
+
+void setup()
+{
+}
+
+void loop()
+{
+  morse.dot(); morse.dot(); morse.dot(); // ...
+
+  morse.dash(); morse.dash(); morse.dash(); // ---
+
+  morse.dot(); morse.dot(); morse.dot(); // ...
+
+  delay(3000);
+}
+```
+Incluimos la librería y llamamos al constructor
+
+```cpp
+#include <Morse.h>
+
+Morse morse(13);
+```
+Ejecutamos las funciones (métodos) de la clase:
+
+```cpp
+morse.dot();
+morse.dash();
 ```
