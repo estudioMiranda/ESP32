@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /img/logo.svg
-tagline: Placa de desarrollo
+tagline: DevKits
 actionText: Comencemos →
 actionLink: /guia/
 features:
