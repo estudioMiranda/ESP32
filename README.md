@@ -2,6 +2,9 @@
  
 Hola y bienvenidos a este tutorial,
 
+[![Introducción](../.vuepress/public/img/introduccion.png)](https://www.youtube.com/watch?v=dZ59MDPcrqo&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE)
+
+
 En este tutorial aprenderemos a programar el microcontrolador ESP32 de espressif con el IDE de Arduino. Este microcontrolador programable es muy popular por que integra conectividad WiFi y Bluetooth a un precio muy económico que lo hace ideal para proyectos IoT “internet de las cosas”.
 
 Podemos encontrar DevKits o placas de desarrollo, que además, integran cámara y micrófono para proyectos de video vigilancia o también micrófono y salida de audio para crear nuestro propio asistente de voz. 
@@ -29,6 +32,9 @@ Descarga el [Arduino IDE](https://www.arduino.cc/en/software)
 
 Descarga el [Driver CP210x](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
 
+[![Introducción](../.vuepress/public/img/instalacion.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+
+
 
 ### Configurar la placa en Arduino
 
@@ -45,6 +51,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 ```
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 ```
+[![Introducción](../.vuepress/public/img/configuracion.png)](https://youtu.be/KuRgwLvH9WY)
 
 Selecciona **Tools > Board > Boards Manager…** y busca:
 ```
@@ -55,6 +62,8 @@ una vez instalado seleccionaremos la placa en **Tools > Board** en mi caso es: *
 Finalmente selecciona un ejemplo **Archivo > Ejemplos > Basics > Blink** y realiza un test.
 
 Si quieres comprobar la conexión WiFi selecciona el ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
+
+[![Test](../.vuepress/public/img/test.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 ## Bibliotecas
 
@@ -73,6 +82,9 @@ Existen tres formas de incorporar **bibliotecas**:
 3. Descomprime el fichero ZIP, copia y pega (elimina **master** del nombre de la carpeta) en:
 
   **Documentos > Arduino > libraries**  
+
+[![Bibliotecas](../.vuepress/public/img/bibliotecas.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+
 
 ### Descarga Bibliotecas
 
@@ -97,6 +109,8 @@ Un punto de acceso inalámbrico (AP) proporciona acceso a través de su red WiFi
 Biblioteca [#include <WiFi.h>](https://www.arduino.cc/en/Reference/WiFiServer)
 
 Biblioteca [#include <ESP8266WiFi.h>](https://esp8266-arduino-spanish.readthedocs.io/es/latest/esp8266wifi/readme.html)
+
+[![Access Point](../.vuepress/public/img/ap.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 ``` cpp
 #ifdef ESP8266
@@ -124,7 +138,10 @@ void loop(void)
 
 ### Modo Station
 
-El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi mediante un router o punto de acceso que conecta con otros dispositivos que estan en la red local o bien a través de internet.  
+El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi mediante un router o punto de acceso que conecta con otros dispositivos que estan en la red local o bien a través de internet. 
+
+[![Station](../.vuepress/public/img/station.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+
 
 ```cpp
 #ifdef ESP8266
@@ -166,6 +183,8 @@ void loop(void)
 Biblioteca [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
 
 ### Método HTTP_GET texto
+
+[![HTTP_GET texto](../.vuepress/public/img/texto.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 ```cpp
 #ifdef ESP8266
@@ -213,11 +232,13 @@ void loop(void)
 }
 ```
 
-### Método HTTP_GET html
+### Método HTTP_GET HTML
 
 Tutorial de HTML [w3school](https://www.w3schools.com/html/)
 
 Función [server.on](https://techtutorialsx.com/2017/12/17/esp32-arduino-http-server-getting-query-parameters/)
+
+[![HTTP_GET HTML](../.vuepress/public/img/html.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 ```cpp
 #ifdef ESP8266
@@ -321,6 +342,8 @@ Reinicia el programa y vete a la menú **Herramientas** (Tools) y aparecerá una
 
 En la misma carpeta del sketch de arduino crea una carpeta llamada **data** e intruduce el archivo para subir a la memoria de tu ESP32, ejecuta la nueva funcionalidad y listo.
 
+[![HTTP_GET SPIFFS](../.vuepress/public/img/spiffs.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+
 ```cpp
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
@@ -397,6 +420,8 @@ void loop(void)
 ### WebSockets JavaScript SPIFFS
 
 Biblioteca [WebSocketsServer](https://github.com/Links2004/arduinoWebSockets)
+
+[![WebSockets JavaScript](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 #### Arduino Sketch
 
@@ -530,6 +555,8 @@ connection.send("Led esta en OFF");
 ### WebSockets Vue.js SPIFFS
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
+
+[![WebSockets Vue.js](../.vuepress/public/img/websocketsVue.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 #### Arduino Sketch
 
@@ -683,6 +710,8 @@ Necesitamos al menos de dos archivos para una biblioteca:
 ### Encabezado (Morse.h)
 
 El archivo de encabezado tiene definiciones para la biblioteca: básicamente una lista de todo lo que hay dentro.
+
+[![Crear Biblioteca](../.vuepress/public/img/crearBiblioteca.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
 
 ```cpp
 #ifndef Morse_h
