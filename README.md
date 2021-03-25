@@ -32,7 +32,7 @@ Descarga el [Arduino IDE](https://www.arduino.cc/en/software)
 
 Descarga el [Driver CP210x](https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers)
 
-[![Introducción](../.vuepress/public/img/instalacion.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Instalación](../.vuepress/public/img/instalacion.png)](https://youtu.be/HYHlZOjQw4Q)
 
 
 
@@ -51,7 +51,7 @@ https://dl.espressif.com/dl/package_esp32_index.json
 ```
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 ```
-[![Introducción](../.vuepress/public/img/configuracion.png)](https://youtu.be/KuRgwLvH9WY)
+[![Configuración](../.vuepress/public/img/configuracion.png)](https://youtu.be/KuRgwLvH9WY)
 
 Selecciona **Tools > Board > Boards Manager…** y busca:
 ```
@@ -63,7 +63,7 @@ Finalmente selecciona un ejemplo **Archivo > Ejemplos > Basics > Blink** y reali
 
 Si quieres comprobar la conexión WiFi selecciona el ejemplo **File > Examples > WiFi (ESP32) > WiFiScan** y realiza un test.
 
-[![Test](../.vuepress/public/img/test.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Test](../.vuepress/public/img/test.png)](https://youtu.be/_WU5XLTfZTY)
 
 ## Bibliotecas
 
@@ -83,7 +83,7 @@ Existen tres formas de incorporar **bibliotecas**:
 
   **Documentos > Arduino > libraries**  
 
-[![Bibliotecas](../.vuepress/public/img/bibliotecas.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Bibliotecas](../.vuepress/public/img/bibliotecas.png)](https://youtu.be/lUjWCWW0IRg)
 
 
 ### Descarga Bibliotecas
@@ -110,7 +110,7 @@ Biblioteca [#include <WiFi.h>](https://www.arduino.cc/en/Reference/WiFiServer)
 
 Biblioteca [#include <ESP8266WiFi.h>](https://esp8266-arduino-spanish.readthedocs.io/es/latest/esp8266wifi/readme.html)
 
-[![Access Point](../.vuepress/public/img/ap.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Access Point](../.vuepress/public/img/ap.png)](https://youtu.be/OEH6mfhxB70)
 
 ``` cpp
 #ifdef ESP8266
@@ -184,7 +184,7 @@ Biblioteca [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
 
 ### Método HTTP_GET texto
 
-[![HTTP_GET texto](../.vuepress/public/img/texto.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![HTTP_GET texto](../.vuepress/public/img/texto.png)](https://youtu.be/bastIzh3v1U)
 
 ```cpp
 #ifdef ESP8266
@@ -238,7 +238,7 @@ Tutorial de HTML [w3school](https://www.w3schools.com/html/)
 
 Función [server.on](https://techtutorialsx.com/2017/12/17/esp32-arduino-http-server-getting-query-parameters/)
 
-[![HTTP_GET HTML](../.vuepress/public/img/html.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![HTTP_GET HTML](../.vuepress/public/img/html.png)](https://youtu.be/nErkSCEuSOA)
 
 ```cpp
 #ifdef ESP8266
@@ -342,7 +342,7 @@ Reinicia el programa y vete a la menú **Herramientas** (Tools) y aparecerá una
 
 En la misma carpeta del sketch de arduino crea una carpeta llamada **data** e intruduce el archivo para subir a la memoria de tu ESP32, ejecuta la nueva funcionalidad y listo.
 
-[![HTTP_GET SPIFFS](../.vuepress/public/img/spiffs.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![HTTP_GET SPIFFS](../.vuepress/public/img/spiffs.png)](https://youtu.be/k2VoVac-arM)
 
 ```cpp
 #ifdef ESP8266
@@ -552,6 +552,208 @@ connection.send("Led esta en OFF");
 </body>
 </html>
 ```
+### WebSockets Json
+
+Biblioteca [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
+
+Biblioteca DHT sensor library (Instalar del Gestor de Bibliotecas de Arduino)
+
+Biblioteca Ticker (Instalar del Gestor de Bibliotecas de Arduino)
+
+[Ticker](https://www.arduino.cc/reference/en/libraries/ticker/)
+Llama funciones en un intervalo establecido
+
+[![WebSockets Json](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+
+#### Arduino Sketch
+
+```cpp
+
+
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
+#include <WebSocketsServer.h>
+#include <SPIFFS.h>
+#include <ArduinoJson.h>
+#include <DHT.h> 
+#include <Ticker.h>
+
+#define DHTPIN 4
+#define Led 2
+
+#define DHTTYPE    DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+void enviarDatosSensor();
+
+Ticker timer;
+
+AsyncWebServer server(80); 
+WebSocketsServer websockets(81);
+
+void notFound(AsyncWebServerRequest *request)
+{
+  request->send(404, "text/plain", "Página no encontrada");
+}
+
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+
+  switch (type) 
+  {
+    case WStype_DISCONNECTED:
+      Serial.printf("[%u] ¡Desconectado!\n", num);
+      break;
+    case WStype_CONNECTED: {
+        IPAddress ip = websockets.remoteIP(num);
+        Serial.printf("[%u] Conectado en %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+      }
+      break;
+    case WStype_TEXT:
+      Serial.printf("[%u] Texto: %s\n", num, payload);
+      String mensaje = String((char*)( payload));
+      Serial.println(mensaje);
+      
+      DynamicJsonDocument doc(200); // documento (capacidad)
+      DeserializationError error = deserializeJson(doc, mensaje);
+      if (error) {
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+        return;
+        }
+        
+      int estadoLed = doc["Led"]; // el estado será de 0 o 1
+      digitalWrite(Led,estadoLed);
+      }
+}
+
+void setup(void)
+{
+  
+  Serial.begin(115200);
+  pinMode(Led, OUTPUT);
+  dht.begin();
+  
+  WiFi.softAP("PuntoAcceso", "");
+  Serial.println("softAP");
+  Serial.println("");
+  Serial.println(WiFi.softAPIP());
+  
+  if(!SPIFFS.begin(true)){
+    Serial.println("A ocurrido un error al montar SPIFFS");
+    return;
+  }
+
+   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request)
+  { 
+   request->send(SPIFFS, "/index.html", "text/html");
+  });
+
+  server.onNotFound(notFound);
+  server.begin();
+  
+  websockets.begin();
+  websockets.onEvent(webSocketEvent);
+  
+  timer.attach(2,enviarDatosSensor); // Ticker timer (Llama funciones en un intervalo establecido)
+
+}
+
+void loop(void) {
+  websockets.loop();
+}
+
+void enviarDatosSensor() {
+  
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  
+  if (isnan(h) || isnan(t) ) {
+    Serial.println(F("Fallo de lectura en sensor DHT11!"));
+    return;
+    }
+   
+   String JSON_Data = "{\"temp\":";
+          JSON_Data += t;
+          JSON_Data += ",\"hum\":";
+          JSON_Data += h;
+          JSON_Data += "}";
+          
+   Serial.println(JSON_Data);
+   websockets.broadcastTXT(JSON_Data);  // envia datos a todos los clientes conectados
+}
+```
+#### Arduino Sketch
+
+```html
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<script>
+
+var connection = new WebSocket('ws://'+location.hostname+':81/');
+
+var estado_boton = 0;
+var temperatura = 0;
+var humedad = 0;
+
+connection.onmessage = function(event){
+
+  var datos_sensores = event.data;
+  var data = JSON.parse(datos_sensores);
+  temperatura = data.temp;
+  humedad = data.hum;
+  document.getElementById("temp_meter").value = temperatura;
+  document.getElementById("temp_value").innerHTML = temperatura;
+  document.getElementById("hum_meter").value = humedad;
+  document.getElementById("hum_value").innerHTML = humedad;
+}
+
+function button_on()
+{
+   estado_boton = 1; 
+  console.log("Led is ON");
+  send_data();
+}
+
+function button_off()
+{
+  estado_boton = 0;
+console.log("Led is OFF");
+send_data();
+}
+
+function send_data()
+{
+  var led_estado= '{"Led" :'+estado_boton+'}';
+  connection.send(led_estado);
+}
+
+</script>
+
+<body>
+<center>
+
+<h1>ESP32 Digital output Botón y PWM input sensor Temperatura y Humedad</h1>
+
+<h3> Led </h3>
+<button onclick= "button_on()">On</button>
+<button onclick= "button_off()">Off</button>
+
+<h3>Temperatura</h3>
+<meter value="2" min="0" max="100" id="temp_meter"> </meter>
+<h3 id="temp_value" style="display: inline-block;"> 2 </h3>
+
+<h3>Humedad</h3>
+<meter value="2" min="0" max="100" id="hum_meter"> </meter>
+<h3 id="hum_value" style="display: inline-block;"> 2 </h3>
+
+</center>
+</body>
+
+</html>
+```
+
 ### WebSockets Vue.js SPIFFS
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
@@ -574,42 +776,21 @@ HTML Vue.js
     <script src="https://unpkg.com/vue@next"></script>
 </head>
 <body>
-  <div id="app">
-    <center>
-      <h1>ESP32 PWM Motor</h1>
-        <h3> Motor </h3>
-          <div>
-            <button @click= "Avanzar" >Avanzar</button>
-          </div>
-          <div>
-            <button @click= "Izquierda" >Izquierda</button>
-            <button @click= "Derecha" >Derecha</button>
-          </div>
-          <div>
-            <button @click= "Retroceder" >Retroceder</button>
-          </div>
-          <div>
-            <input type="range" min="0" max="255" v-model="velocidad" value="125" class="slider">
-            <p>Valor: <span>{{ velocidad }}</span></p>
-          </div>
-          <div>
-            <button @click= "Velocidad" >Velocidad</button>
-          </div>
-        
-        <h3> Led </h3>
-          <button @click= "buttonOn" >On</button>
-          <button @click= "buttonOff" >Off</button>
-                
-        <h3>Temperatura</h3>
-          <meter :value="temperatura" min="0" max="100"> </meter>
-          <h3 style="display: inline-block;"> {{ temperatura }} </h3>
-
-        <h3>Humedad</h3>
-          <meter :value="humedad" min="0" max="100"> </meter>
-          <h3 style="display: inline-block;"> {{ humedad }} </h3>
-
-    </center>      
-  </div>
+    <div id="app">
+      <center>
+            <h1>ESP32 Digital output Botón y PWM input sensor Temperatura y Humedad</h1>
+                <h3> Led </h3>
+                    <button @click= "buttonOn" >On</button>
+                    <button @click= "buttonOff" >Off</button>
+                    <div style="text-align: center;">
+                <h3>Temperatura</h3>
+                    <meter :value="temperatura" min="0" max="100"> </meter>
+                    <h3 style="display: inline-block;"> {{ temperatura }} </h3>
+                <h3>Humedad</h3>
+                    <meter :value="humedad" min="0" max="100"> </meter>
+                    <h3 style="display: inline-block;"> {{ humedad }} </h3>
+          </center>      
+    </div>
     <script>
         const app = {
     data() {
@@ -617,12 +798,10 @@ HTML Vue.js
         temperatura: 0,
         humedad: 0,
         buttonStatus: 0,
-        buttonMover: 0,
-        velocidad: 0,
         connection : new WebSocket('ws://'+location.hostname+':81/')
       }
     },
-
+    
     methods: {
 
       onMessage(event){
@@ -633,54 +812,20 @@ HTML Vue.js
         this.temperatura = data.temp;
         this.humedad = data.hum;
       },
-      Velocidad(){
-        this.buttonMover = this.velocidad; 
-        console.log("Motor velocidad")
-        this.send_data_motor()
-      },
-      Parar(){
-        this.buttonMover = 0; 
-        console.log("Motor parar")
-        this.send_data_motor()
-      },
-      Avanzar(){
-        this.buttonMover = 1; 
-        console.log("Motor avanza")
-        this.send_data_motor()
-      },
-      Izquierda(){
-        this.buttonMover = 2; 
-        console.log("Motor gira izquierda")
-        this.send_data_motor()
-      },
-      Derecha(){
-        this.buttonMover = 3; 
-        console.log("Motor gira derecha")
-        this.send_data_motor()
-      },
-      Retroceder(){
-        this.buttonMover = 4; 
-        console.log("Motor retrocede")
-        this.send_data_motor()
-      },
-      send_data_motor(){
-        var full_data = '{"Velocidad" :'+this.buttonMover+'}'
-        this.connection.send(full_data)
-      },
       
       buttonOn(){
         this.buttonStatus = 1; 
         console.log("Led is ON")
-        this.send_data_led()
+        this.send_data()
       },
 
       buttonOff(){
         this.buttonStatus = 0;
         console.log("Led is OFF")
-        this.send_data_led()
+        this.send_data()
       },
       
-      send_data_led(){
+      send_data(){
         var full_data = '{"Led" :'+this.buttonStatus+'}'
         this.connection.send(full_data)
       },
