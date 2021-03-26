@@ -754,7 +754,7 @@ function send_data()
 </html>
 ```
 
-### WebSockets Vue.js SPIFFS
+### WebSockets Vue.js
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
 
@@ -764,28 +764,28 @@ JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
 
 ```cpp
 Arduino Sketch
+El mismo que el de websokets
 ```
 HTML Vue.js
 ```html
 <!DOCTYPE html>
-<html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESP32</title> 
     <script src="https://unpkg.com/vue@next"></script>
 </head>
+
 <body>
-    <div id="app">
+    <div id="vue">
       <center>
-            <h1>ESP32 Digital output Botón y PWM input sensor Temperatura y Humedad</h1>
+            <h1>ESP32 Digital output Boton y PWM input sensor Temperatura y Humedad</h1>
                 <h3> Led </h3>
-                    <button @click= "buttonOn" >On</button>
-                    <button @click= "buttonOff" >Off</button>
-                    <div style="text-align: center;">
+                    <button @click= "botonOn" >On</button>
+                    <button @click= "botonOff" >Off</button>
+
                 <h3>Temperatura</h3>
                     <meter :value="temperatura" min="0" max="100"> </meter>
                     <h3 style="display: inline-block;"> {{ temperatura }} </h3>
+
                 <h3>Humedad</h3>
                     <meter :value="humedad" min="0" max="100"> </meter>
                     <h3 style="display: inline-block;"> {{ humedad }} </h3>
@@ -797,48 +797,46 @@ HTML Vue.js
       return {
         temperatura: 0,
         humedad: 0,
-        buttonStatus: 0,
+        boton_estado: 0,
         connection : new WebSocket('ws://'+location.hostname+':81/')
       }
     },
     
     methods: {
 
-      onMessage(event){
-        var datosTH = event.data;
-        console.log(datosTH);
-        // Convertimos el JSON en datos
-        var data = JSON.parse(datosTH);
+      recibir(event){
+        var datosSensor = event.data;
+        var data = JSON.parse(datosSensor);
         this.temperatura = data.temp;
         this.humedad = data.hum;
       },
       
-      buttonOn(){
-        this.buttonStatus = 1; 
+      botonOn(){
+        this.boton_estado = 1; 
         console.log("Led is ON")
-        this.send_data()
+        this.enviarDato()
       },
 
-      buttonOff(){
-        this.buttonStatus = 0;
+      botonOff(){
+        this.boton_estado = 0;
         console.log("Led is OFF")
-        this.send_data()
+        this.enviarDato()
       },
       
-      send_data(){
-        var full_data = '{"Led" :'+this.buttonStatus+'}'
-        this.connection.send(full_data)
+      enviarDato(){
+        var led_estado = '{"Led" :'+this.boton_estado+'}'
+        this.connection.send(led_estado)
       },
     },
     
     mounted() {
       this.connection.onmessage = event => {
-        this.onMessage(event)
+        this.recibir(event)
       }
   }
 }
 
-Vue.createApp(app).mount('#app')
+Vue.createApp(app).mount('#vue')
     </script>  
 </body>
 </html>
