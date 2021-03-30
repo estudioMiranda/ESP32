@@ -569,7 +569,6 @@ Llama funciones en un intervalo establecido
 
 ```cpp
 
-
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 #include <WebSocketsServer.h>
@@ -634,10 +633,16 @@ void setup(void)
   pinMode(Led, OUTPUT);
   dht.begin();
   
-  WiFi.softAP("PuntoAcceso", "");
-  Serial.println("softAP");
-  Serial.println("");
-  Serial.println(WiFi.softAPIP());
+  WiFi.begin("studiomiranda", "88888888");
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Conectado, dirección IP: ");
+  Serial.println(WiFi.localIP());
   
   if(!SPIFFS.begin(true)){
     Serial.println("A ocurrido un error al montar SPIFFS");
@@ -775,7 +780,7 @@ HTML Vue.js
 </head>
 
 <body>
-    <div id="vue">
+    <div id="nombre1">
       <center>
             <h1>ESP32 Digital output Boton y PWM input sensor Temperatura y Humedad</h1>
                 <h3> Led </h3>
@@ -791,8 +796,9 @@ HTML Vue.js
                     <h3 style="display: inline-block;"> {{ humedad }} </h3>
           </center>      
     </div>
+    
     <script>
-        const app = {
+        const nombre2 = {
     data() {
       return {
         temperatura: 0,
@@ -836,7 +842,7 @@ HTML Vue.js
   }
 }
 
-Vue.createApp(app).mount('#vue')
+Vue.createApp(nombre2).mount('#nombre1')
     </script>  
 </body>
 </html>
