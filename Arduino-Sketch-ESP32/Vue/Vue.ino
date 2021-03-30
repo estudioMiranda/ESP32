@@ -63,10 +63,16 @@ void setup(void)
   pinMode(Led, OUTPUT);
   dht.begin();
   
-  WiFi.softAP("PuntoAcceso", "");
-  Serial.println("softAP");
-  Serial.println("");
-  Serial.println(WiFi.softAPIP());
+  WiFi.begin("studiomiranda", "88888888");
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Conectado, dirección IP: ");
+  Serial.println(WiFi.localIP());
   
   if(!SPIFFS.begin(true)){
     Serial.println("A ocurrido un error al montar SPIFFS");
