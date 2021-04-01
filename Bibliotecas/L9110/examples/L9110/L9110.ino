@@ -1,19 +1,18 @@
 #include <Motor.h>
-Motor motor = Motor(5, 6, 7, 8, 4, 3, 5);
-uint8_t Velocidad = 255;
+Motor motor = Motor(27,26,25,33);
 
 void setup() {}
 
-void loop() 
+void loop()
 {
     motor.Avanzar();
     delay(1000);
-    motor.GirarIzquierda();
-    delay(1000);
     motor.GirarDerecha();
+    delay(1000);
+    motor.GirarIzquierda();
     delay(1000);
     motor.Retroceder();
     delay(1000);
     motor.Parar();
-    delay(1000);
+    delay(4000);
 }
