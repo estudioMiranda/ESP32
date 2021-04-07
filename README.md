@@ -140,9 +140,6 @@ void loop(void)
 
 El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi mediante un router o punto de acceso que conecta con otros dispositivos que estan en la red local o bien a través de internet. 
 
-[![Station](../.vuepress/public/img/station.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
-
-
 ```cpp
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
@@ -421,7 +418,7 @@ void loop(void)
 
 Biblioteca [WebSocketsServer](https://github.com/Links2004/arduinoWebSockets)
 
-[![WebSockets JavaScript](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets JavaScript](../.vuepress/public/img/websockets.png)](https://youtu.be/_QvtpKYXe4U)
 
 #### Arduino Sketch
 
@@ -563,7 +560,7 @@ Biblioteca Ticker (Instalar del Gestor de Bibliotecas de Arduino)
 [Ticker](https://www.arduino.cc/reference/en/libraries/ticker/)
 Llama funciones en un intervalo establecido
 
-[![WebSockets Json](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets Json](../.vuepress/public/img/websockets.png)](https://youtu.be/j-UGCN9gdOA)
 
 #### Arduino Sketch
 
@@ -763,7 +760,7 @@ function send_data()
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
 
-[![WebSockets Vue.js](../.vuepress/public/img/websocketsVue.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets Vue.js](../.vuepress/public/img/websocketsVue.png)](https://youtu.be/dxw_0xOmfvw)
 
 #### Arduino Sketch
 
@@ -847,6 +844,91 @@ Vue.createApp(nombre2).mount('#nombre1')
 </body>
 </html>
 ```
+
+## Utilizando estilos CSS
+
+### Bootstrap
+
+[Bootstrap estilos](https://getbootstrap.com/)
+
+[Materialize estilos](https://materializecss.com/)
+
+[BootstrapVue estilos](https://bootstrap-vue.org/)
+
+### Font AWESOME
+
+[FontAwesome estilos](https://fontawesome.com/)
+
+Iconos para tu página web
+
+```html
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b5c28b0c18.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="nombre1">
+      <div class="container">
+        <h1 class="text-center">Vue.js y Bootstrap</h1>
+          <div class="d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title text-center">Botón Led</h5>
+                  <div class="d-grid mx-auto">
+                  <button type="button" class="btn btn-success btn-lg btn-block mb-2" @click="botonOn" ><i class="fas fa-power-off"></i></button>
+                  <button type="button" class="btn btn-danger btn-lg btn-block mt-2" @click= "botonOff" ><i class="fas fa-plug"></i></button>
+                  </div>
+                  <p class="card-text mt-2">Enciende y apaga el led integrado.</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <script>
+        const nombre2 = {
+    data() {
+      return {
+        temperatura: 0,
+        humedad: 0,
+        boton_estado: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+    
+    methods: {
+      
+      botonOn(){
+        this.boton_estado = 1; 
+        console.log("Led is ON")
+        this.enviarDato()
+      },
+
+      botonOff(){
+        this.boton_estado = 0;
+        console.log("Led is OFF")
+        this.enviarDato()
+      },
+      
+      enviarDato(){
+        var led_estado = '{"Led" :'+this.boton_estado+'}'
+        this.connection.send(led_estado)
+      },
+  }
+}
+
+Vue.createApp(nombre2).mount('#nombre1')
+    </script>  
+</body>
+</html>
+```
+
 ## Crear una Biblioteca en Arduino
 
 Morse [Library](https://www.arduino.cc/en/Hacking/LibraryTutorial)
@@ -860,7 +942,7 @@ Necesitamos al menos de dos archivos para una biblioteca:
 
 El archivo de encabezado tiene definiciones para la biblioteca: básicamente una lista de todo lo que hay dentro.
 
-[![Crear Biblioteca](../.vuepress/public/img/crearBiblioteca.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Crear Biblioteca](../.vuepress/public/img/crearBiblioteca.png)](https://youtu.be/2jrAMqw2_f8)
 
 ```cpp
 #ifndef Morse_h
