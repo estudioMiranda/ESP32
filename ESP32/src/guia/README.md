@@ -140,9 +140,6 @@ void loop(void)
 
 El modo estación (STA) se utiliza para conectar el módulo ESP a una red WiFi mediante un router o punto de acceso que conecta con otros dispositivos que estan en la red local o bien a través de internet. 
 
-[![Station](../.vuepress/public/img/station.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
-
-
 ```cpp
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
@@ -421,7 +418,7 @@ void loop(void)
 
 Biblioteca [WebSocketsServer](https://github.com/Links2004/arduinoWebSockets)
 
-[![WebSockets JavaScript](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets JavaScript](../.vuepress/public/img/websockets.png)](https://youtu.be/_QvtpKYXe4U)
 
 #### Arduino Sketch
 
@@ -563,7 +560,7 @@ Biblioteca Ticker (Instalar del Gestor de Bibliotecas de Arduino)
 [Ticker](https://www.arduino.cc/reference/en/libraries/ticker/)
 Llama funciones en un intervalo establecido
 
-[![WebSockets Json](../.vuepress/public/img/websockets.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets Json](../.vuepress/public/img/websockets.png)](https://youtu.be/j-UGCN9gdOA)
 
 #### Arduino Sketch
 
@@ -763,7 +760,7 @@ function send_data()
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
 
-[![WebSockets Vue.js](../.vuepress/public/img/websocketsVue.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![WebSockets Vue.js](../.vuepress/public/img/websocketsVue.png)](https://youtu.be/dxw_0xOmfvw)
 
 #### Arduino Sketch
 
@@ -847,6 +844,236 @@ Vue.createApp(nombre2).mount('#nombre1')
 </body>
 </html>
 ```
+
+## Utilizando estilos CSS
+
+### Websocket Vue.js Bootstrap FontAwesome 
+
+[Bootstrap estilos](https://getbootstrap.com/)
+
+[Materialize estilos](https://materializecss.com/)
+
+[BootstrapVue estilos](https://bootstrap-vue.org/)
+
+[FontAwesome estilos](https://fontawesome.com/)
+
+Iconos para tu página web
+
+```html
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/b5c28b0c18.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="nombre1">
+      <div class="container">
+        <h1 class="text-center">Vue.js y Bootstrap</h1>
+          <div class="d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+              <div class="card-body">
+                <h5 class="card-title text-center">Botón Led</h5>
+                  <div class="d-grid mx-auto">
+                  <button type="button" class="btn btn-success btn-lg btn-block mb-2" @click="botonOn" ><i class="fas fa-power-off"></i></button>
+                  <button type="button" class="btn btn-danger btn-lg btn-block mt-2" @click= "botonOff" ><i class="fas fa-plug"></i></button>
+                  </div>
+                  <p class="card-text mt-2">Enciende y apaga el led integrado.</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <script>
+        const nombre2 = {
+    data() {
+      return {
+        temperatura: 0,
+        humedad: 0,
+        boton_estado: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+    
+    methods: {
+      
+      botonOn(){
+        this.boton_estado = 1; 
+        console.log("Led is ON")
+        this.enviarDato()
+      },
+
+      botonOff(){
+        this.boton_estado = 0;
+        console.log("Led is OFF")
+        this.enviarDato()
+      },
+      
+      enviarDato(){
+        var led_estado = '{"Led" :'+this.boton_estado+'}'
+        this.connection.send(led_estado)
+      },
+  }
+}
+
+Vue.createApp(nombre2).mount('#nombre1')
+    </script>  
+</body>
+</html>
+```
+### WebSockets Vue.js PWM (input)
+
+PWM[modulación con pulsos](https://randomnerdtutorials.com/esp32-pwm-arduino-ide/)
+
+Bootstrap[input range](https://getbootstrap.com/docs/5.0/forms/range/)
+
+```cpp
+
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
+#include <WebSocketsServer.h>
+#include <SPIFFS.h>
+#include <ArduinoJson.h>
+
+const int led = 2;
+
+// Propiedades PWM
+const int freq = 5000;
+const int ledChannel = 0;
+const int resolution = 8;
+
+AsyncWebServer server(80); 
+WebSocketsServer websockets(81);
+
+void notFound(AsyncWebServerRequest *request)
+{
+  request->send(404, "text/plain", "Página no encontrada");
+}
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+
+  switch (type) 
+  {
+    case WStype_DISCONNECTED:
+      Serial.printf("[%u] ¡Desconectado!\n", num);
+      break;
+    case WStype_CONNECTED: {
+        IPAddress ip = websockets.remoteIP(num);
+        Serial.printf("[%u] Conectado en %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+      }
+      break;
+    case WStype_TEXT:
+      Serial.printf("[%u] Texto: %s\n", num, payload);
+      String mensaje = String((char*)( payload));
+      Serial.println(mensaje);
+      
+      DynamicJsonDocument doc(200); // documento (capacidad)
+      DeserializationError error = deserializeJson(doc, mensaje);
+      if (error) {
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+        return;
+        }
+        
+      int dutyCycle = doc["Led"];
+      ledcWrite(ledChannel, dutyCycle);
+      }
+}
+
+void setup(void)
+{
+  pinMode(led, OUTPUT);
+  ledcSetup(ledChannel, freq, resolution);
+  ledcAttachPin( led, ledChannel);
+  
+  Serial.begin(115200);
+  
+
+  WiFi.begin("studiomiranda", "88888888");
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Conectado, dirección IP: ");
+  Serial.println(WiFi.localIP());
+  
+  if(!SPIFFS.begin(true)){
+    Serial.println("A ocurrido un error al montar SPIFFS");
+    return;
+  }
+
+   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request)
+  { 
+   request->send(SPIFFS, "/index.html", "text/html");
+  });
+
+  server.onNotFound(notFound);
+  server.begin();
+  
+  websockets.begin();
+  websockets.onEvent(webSocketEvent);
+  
+}
+
+void loop(void) {
+  websockets.loop();
+}
+```
+HTML
+
+```html
+<!DOCTYPE html>
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="vue">
+      <center>
+            <h1>ESP32 PWM Led</h1>
+            <br>
+            <label for="led" class="form-label">PWM led</label>
+            <br>
+            <input @change= "enviarDato" v-model="valor" type="range" class="form-range" min="0" max="255" id="led">
+            <br>
+            <div class="mt-2">Valor: {{ valor }}</div>
+          </center>      
+    </div>
+    <script>
+        const app = {
+    data() {
+      return {
+        valor: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+    
+    methods: {
+      
+      enviarDato(){
+        var datoPWM= '{"Led" :'+this.valor+'}'
+        this.connection.send(datoPWM)
+      },
+    },
+}
+
+Vue.createApp(app).mount('#vue')
+    </script>  
+</body>
+</html>
+```
+
+
 ## Crear una Biblioteca en Arduino
 
 Morse [Library](https://www.arduino.cc/en/Hacking/LibraryTutorial)
@@ -860,7 +1087,7 @@ Necesitamos al menos de dos archivos para una biblioteca:
 
 El archivo de encabezado tiene definiciones para la biblioteca: básicamente una lista de todo lo que hay dentro.
 
-[![Crear Biblioteca](../.vuepress/public/img/crearBiblioteca.png)](https://www.youtube.com/watch?v=HYHlZOjQw4Q&list=PLgh8bcLDakt3KLia5B5ZIEbvhxp41EPiE&index=2)
+[![Crear Biblioteca](../.vuepress/public/img/crearBiblioteca.png)](https://youtu.be/2jrAMqw2_f8)
 
 ```cpp
 #ifndef Morse_h
