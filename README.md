@@ -847,15 +847,13 @@ Vue.createApp(nombre2).mount('#nombre1')
 
 ## Utilizando estilos CSS
 
-### Bootstrap
+### Websocket Vue.js Bootstrap FontAwesome 
 
 [Bootstrap estilos](https://getbootstrap.com/)
 
 [Materialize estilos](https://materializecss.com/)
 
 [BootstrapVue estilos](https://bootstrap-vue.org/)
-
-### Font AWESOME
 
 [FontAwesome estilos](https://fontawesome.com/)
 
@@ -928,6 +926,153 @@ Vue.createApp(nombre2).mount('#nombre1')
 </body>
 </html>
 ```
+### WebSockets Vue.js PWM (input)
+
+PWM[modulación con pulsos](https://randomnerdtutorials.com/esp32-pwm-arduino-ide/)
+
+Bootstrap[input range](https://getbootstrap.com/docs/5.0/forms/range/)
+
+```cpp
+
+#include <WiFi.h>
+#include <ESPAsyncWebServer.h>
+#include <WebSocketsServer.h>
+#include <SPIFFS.h>
+#include <ArduinoJson.h>
+
+const int led = 2;
+
+// Propiedades PWM
+const int freq = 5000;
+const int ledChannel = 0;
+const int resolution = 8;
+
+AsyncWebServer server(80); 
+WebSocketsServer websockets(81);
+
+void notFound(AsyncWebServerRequest *request)
+{
+  request->send(404, "text/plain", "Página no encontrada");
+}
+
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
+
+  switch (type) 
+  {
+    case WStype_DISCONNECTED:
+      Serial.printf("[%u] ¡Desconectado!\n", num);
+      break;
+    case WStype_CONNECTED: {
+        IPAddress ip = websockets.remoteIP(num);
+        Serial.printf("[%u] Conectado en %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+      }
+      break;
+    case WStype_TEXT:
+      Serial.printf("[%u] Texto: %s\n", num, payload);
+      String mensaje = String((char*)( payload));
+      Serial.println(mensaje);
+      
+      DynamicJsonDocument doc(200); // documento (capacidad)
+      DeserializationError error = deserializeJson(doc, mensaje);
+      if (error) {
+        Serial.print("deserializeJson() failed: ");
+        Serial.println(error.c_str());
+        return;
+        }
+        
+      int dutyCycle = doc["Led"];
+      ledcWrite(ledChannel, dutyCycle);
+      }
+}
+
+void setup(void)
+{
+  pinMode(led, OUTPUT);
+  ledcSetup(ledChannel, freq, resolution);
+  ledcAttachPin( led, ledChannel);
+  
+  Serial.begin(115200);
+  
+
+  WiFi.begin("studiomiranda", "88888888");
+  Serial.print("Conectando");
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("Conectado, dirección IP: ");
+  Serial.println(WiFi.localIP());
+  
+  if(!SPIFFS.begin(true)){
+    Serial.println("A ocurrido un error al montar SPIFFS");
+    return;
+  }
+
+   server.on("/", HTTP_GET, [](AsyncWebServerRequest * request)
+  { 
+   request->send(SPIFFS, "/index.html", "text/html");
+  });
+
+  server.onNotFound(notFound);
+  server.begin();
+  
+  websockets.begin();
+  websockets.onEvent(webSocketEvent);
+  
+}
+
+void loop(void) {
+  websockets.loop();
+}
+```
+HTML
+
+```html
+<!DOCTYPE html>
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="vue">
+      <center>
+            <h1>ESP32 PWM Led</h1>
+            <br>
+            <label for="led" class="form-label">PWM led</label>
+            <br>
+            <input @change= "enviarDato" v-model="valor" type="range" class="form-range" min="0" max="255" id="led">
+            <br>
+            <div class="mt-2">Valor: {{ valor }}</div>
+          </center>      
+    </div>
+    <script>
+        const app = {
+    data() {
+      return {
+        valor: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+    
+    methods: {
+      
+      enviarDato(){
+        var datoPWM= '{"Led" :'+this.valor+'}'
+        this.connection.send(datoPWM)
+      },
+    },
+}
+
+Vue.createApp(app).mount('#vue')
+    </script>  
+</body>
+</html>
+```
+
 
 ## Crear una Biblioteca en Arduino
 
