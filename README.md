@@ -413,8 +413,9 @@ void loop(void)
 {
 }
 ```
+## WebSocket
 
-### WebSockets JavaScript SPIFFS
+### WebSocket JavaScript SPIFFS
 
 Biblioteca [WebSocketsServer](https://github.com/Links2004/arduinoWebSockets)
 
@@ -549,7 +550,7 @@ connection.send("Led esta en OFF");
 </body>
 </html>
 ```
-### WebSockets Json
+### WebSocket Json
 
 Biblioteca [ArduinoJson](https://github.com/bblanchon/ArduinoJson)
 
@@ -756,7 +757,7 @@ function send_data()
 </html>
 ```
 
-### WebSockets Vue.js
+### WebSocket Vue.js
 
 JavaScript Framework [Vue.js v.3](https://v3.vuejs.org/)
 
@@ -845,7 +846,7 @@ Vue.createApp(nombre2).mount('#nombre1')
 </html>
 ```
 
-## Utilizando estilos CSS
+## WebSocket con estilos CSS
 
 ### Websocket Vue.js Bootstrap FontAwesome 
 
@@ -926,11 +927,11 @@ Vue.createApp(nombre2).mount('#nombre1')
 </body>
 </html>
 ```
-### WebSockets Vue.js PWM (input)
+### WebSockets Vue.js PWM (ouput)
 
-PWM[modulación con pulsos](https://randomnerdtutorials.com/esp32-pwm-arduino-ide/)
+PWM [modulación con pulsos](https://randomnerdtutorials.com/esp32-pwm-arduino-ide/)
 
-Bootstrap[input range](https://getbootstrap.com/docs/5.0/forms/range/)
+Bootstrap [input range](https://getbootstrap.com/docs/5.0/forms/range/)
 
 ```cpp
 
@@ -1076,6 +1077,8 @@ Vue.createApp(app).mount('#vue')
 
 ## Crear una Biblioteca en Arduino
 
+### Biblioteca Morse (ejemplo de arduino)
+
 Morse [Library](https://www.arduino.cc/en/Hacking/LibraryTutorial)
 
 Necesitamos al menos de dos archivos para una biblioteca: 
@@ -1083,7 +1086,7 @@ Necesitamos al menos de dos archivos para una biblioteca:
 - Morse.cpp
 
 
-### Encabezado (Morse.h)
+#### Encabezado (Morse.h)
 
 El archivo de encabezado tiene definiciones para la biblioteca: básicamente una lista de todo lo que hay dentro.
 
@@ -1125,7 +1128,7 @@ Una es una declaración **#include** que le da acceso a los tipos y constantes e
 
 Una clase es simplemente una colección de funciones y variables que se mantienen juntas en un solo lugar. Pueden ser públicas , lo que significa que son accesibles desde cualquier parte a ellas, o privadas , lo que significa que solo se puede acceder a ellas desde la propia clase. Cada clase tiene una función especial conocida como constructor , que se utiliza para crear una instancia de la clase. El constructor tiene el mismo nombre que la clase y no tiene tipo de retorno.
 
-### Origen (*.cpp)
+#### Origen (*.cpp)
 
 El archivo fuente tiene el código real:
 
@@ -1190,7 +1193,7 @@ void Morse::dash()
   delay(250);
 }
 ```
-### Sketch + Biblioteca
+#### Sketch + Biblioteca
 
 ```cpp
 #include <Morse.h>
@@ -1225,3 +1228,121 @@ Ejecutamos las funciones (métodos) de la clase:
 morse.dot();
 morse.dash();
 ```
+### Biblioteca Motor (puente H)
+
+[Motor](https://github.com/estudioMiranda/ESP32/tree/main/Bibliotecas/L9110)
+
+#### motor.h
+
+```cpp
+#ifndef MOTOR_H
+#define MOTOR_H
+
+#include <Arduino.h>
+class Motor
+{
+  public:
+    Motor(uint8_t _motor1Pin1,
+          uint8_t _motor1Pin2,
+          uint8_t _motor2Pin1,
+          uint8_t _motor2Pin2
+          );
+
+    void Avanzar();
+    void Retroceder();
+    void GirarIzquierda();
+    void GirarDerecha();
+    void Parar();
+  private:
+    uint8_t motor1Pin1,motor1Pin2,motor2Pin1,motor2Pin2;
+};
+#endif
+```
+#### motor.cpp
+
+```cpp
+#include "Motor.h"
+
+Motor::Motor( uint8_t _motor1Pin1,
+              uint8_t _motor1Pin2,
+              uint8_t _motor2Pin1,
+              uint8_t _motor2Pin2
+            )
+
+{
+  motor1Pin1=_motor1Pin1;
+  motor1Pin2=_motor1Pin2;
+  motor2Pin1=_motor2Pin1;
+  motor2Pin2=_motor2Pin2;
+  
+  pinMode(motor1Pin1,OUTPUT);
+  pinMode(motor1Pin2,OUTPUT);
+  pinMode(motor2Pin1,OUTPUT);
+  pinMode(motor2Pin2,OUTPUT);
+
+}
+
+void Motor::Avanzar()
+{
+  digitalWrite(motor1Pin1,HIGH);
+  digitalWrite(motor1Pin2,LOW);
+  digitalWrite(motor2Pin1,HIGH);
+  digitalWrite(motor2Pin2,LOW);
+}
+void Motor::Retroceder()
+{
+  digitalWrite(motor1Pin1,LOW);
+  digitalWrite(motor1Pin2,HIGH);
+  digitalWrite(motor2Pin1,LOW);
+  digitalWrite(motor2Pin2,HIGH);
+}
+void Motor::GirarIzquierda()
+{
+  digitalWrite(motor1Pin1,HIGH);
+  digitalWrite(motor1Pin2,LOW);
+  digitalWrite(motor2Pin1,LOW);
+  digitalWrite(motor2Pin2,HIGH);
+}
+void Motor::GirarDerecha()
+{
+  digitalWrite(motor1Pin1,LOW);
+  digitalWrite(motor1Pin2,HIGH);
+  digitalWrite(motor2Pin1,HIGH);
+  digitalWrite(motor2Pin2,LOW);
+}
+
+void Motor::Parar()
+{
+  digitalWrite(motor1Pin1,LOW);
+  digitalWrite(motor1Pin2,LOW);
+  digitalWrite(motor2Pin1,LOW);
+  digitalWrite(motor2Pin2,LOW);
+}
+```
+## WebSocket Motor (output PWM)
+
+### Utilizando biblioteca motor
+
+```cpp
+
+#include <Motor.h>
+Motor motor = Motor(27,26,25,33);
+
+void setup() {}
+
+void loop()
+{
+    motor.Avanzar();
+    delay(1000);
+    motor.GirarDerecha();
+    delay(1000);
+    motor.GirarIzquierda();
+    delay(1000);
+    motor.Retroceder();
+    delay(1000);
+    motor.Parar();
+    delay(4000);
+}
+```
+
+### Utilizando Vue.js
