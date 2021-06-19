@@ -9,7 +9,7 @@
   },
   "repository": "/miranda",
   "scripts": {
-    "dev": "vuepress dev src",
+    "serve": "vuepress dev src",
     "build": "vuepress build src",
     "deploy": "deploy.sh"
   },
