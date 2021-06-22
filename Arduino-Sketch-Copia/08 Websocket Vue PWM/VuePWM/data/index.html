@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="vue">
+      <center>
+            <h1>ESP32 PWM Led</h1>
+            <br>
+            <label for="led" class="form-label">PWM led</label>
+            <br>
+            <input @change= "enviarDato" v-model="valor" type="range" class="form-range" min="0" max="255" id="led">
+            <br>
+            <div class="mt-2">Valor: {{ valor }}</div>
+          </center>      
+    </div>
+    <script>
+        const app = {
+    data() {
+      return {
+        valor: 0,
+        connection : new WebSocket('ws://'+location.hostname+':81/')
+      }
+    },
+    
+    methods: {
+      
+      enviarDato(){
+        var datoPWM= '{"Led" :'+this.valor+'}'
+        this.connection.send(datoPWM)
+      },
+    },
+}
+
+Vue.createApp(app).mount('#vue')
+    </script>  
+</body>
+</html>
