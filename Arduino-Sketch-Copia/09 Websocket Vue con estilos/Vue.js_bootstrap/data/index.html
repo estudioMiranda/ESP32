@@ -9,30 +9,34 @@
 </head>
 
 <body>
-    <div id="nombre1">
-      <div class="container">
-        <h1 class="text-center">Vue.js y Bootstrap</h1>
-          <div class="d-flex justify-content-center">
-            <div class="card" style="width: 18rem;">
+  <div id="nombre1">
+    <div class="container">
+      <div class="text-center">
+        <h1>Vue PWM</h1> 
+        <div class="row">
+          <div class="col d-flex justify-content-center">
+            <div class="card" style="width: 12rem;">
               <div class="card-body">
-                <h5 class="card-title text-center">Botón Led</h5>
-                  <div class="d-grid mx-auto">
-                  <button type="button" class="btn btn-success btn-lg btn-block mb-2" @click="botonOn" >
-                    <i class="fas fa-power-off"></i>
-                  </button>
-                  <button type="button" class="btn btn-danger btn-lg btn-block mt-2" @click= "botonOff" >
-                    <i class="fas fa-plug"></i>
-                  </button>
-                  </div>
-                  <p class="card-text mt-2">Enciende y apaga el led integrado.</p>
+                <h5 class="card-title">Led integrado</h5>
+                <div class="btn-group-vertical mt-3">
+                <button type="button" class="btn btn-success btn-lg btn-block mb-2" @click="botonOn" >
+                  <i class="fas fa-power-off"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-lg btn-block mt-2" @click= "botonOff" >
+                  <i class="fas fa-plug"></i>
+                </button>
+               </div>
+                <p class="card-text mt-3">On - Off</p>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <script>
-        const nombre2 = {
+<script>
+  const nombre2 = {
     data() {
       return {
         temperatura: 0,
@@ -41,29 +45,29 @@
         connection : new WebSocket('ws://'+location.hostname+':81/')
       }
     },
-    
-    methods: {
-      
-      botonOn(){
-        this.boton_estado = 1; 
-        console.log("Led is ON")
-        this.enviarDato()
-      },
 
-      botonOff(){
-        this.boton_estado = 0;
-        console.log("Led is OFF")
-        this.enviarDato()
-      },
-      
-      enviarDato(){
-        var led_estado = '{"Led" :'+this.boton_estado+'}'
-        this.connection.send(led_estado)
-      },
+  methods: {
+    
+    botonOn(){
+      this.boton_estado = 1; 
+      console.log("Led is ON")
+      this.enviarDato()
+    },
+
+    botonOff(){
+      this.boton_estado = 0;
+      console.log("Led is OFF")
+      this.enviarDato()
+    },
+    
+    enviarDato(){
+      var led_estado = '{"Led" :'+this.boton_estado+'}'
+      this.connection.send(led_estado)
+    },
   }
 }
 
 Vue.createApp(nombre2).mount('#nombre1')
-    </script>  
+</script>  
 </body>
 </html>
